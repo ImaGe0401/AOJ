@@ -72,28 +72,71 @@ const double PI  = acos(-1.0);
 #define dump(x)  cerr << #x << " = " << (x) << endl;
 #define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << " " << __FILE__ << endl;
 
-//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_B
-static const int N = 100;
-int main()
-{
-    int n, p[N + 1], m[N + 1][N + 1];
-    cin >> n;
-    for (int i = 1; i <= n; ++i){
-        cin >> p[i - 1] >> p[i];
-    }
+//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_9_C
 
-    for (int i = 1; i <= n; ++i)
-        m[i][i] = 0;
-    for (int l = 2; l <= n; ++l){
-        for (int i = 1; i <= n - l + 1; ++i){
-            int j = i + l - 1;
-            m[i][j] = (1 << 21);
-            for (int k = i; k <= j - 1; ++k){
-                m[i][j] = min(m[i][j], m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]);
-            }
+#define MAX 2000000
+#define INFTY (1<<30)
+
+int H, A[MAX + 1];
+
+void maxHeapify(int i)
+{
+    int l, r, largest;
+    l = 2 * i;
+    r = 2 * i + 1;
+
+    if (l <= H && A[l] > A[i])
+        largest = l;
+    else
+        largest = i;
+    if (r <= H && A[r] > A[largest])
+        largest = r;
+    if (largest != i)
+    {
+        swap(A[i], A[largest]);
+        maxHeapify(largest);
+    }
+}
+
+int extract(){
+    int maxv;
+    if(H < 1) return -INFTY;
+    maxv = A[1];
+    A[1] = A[H--];
+    maxHeapify(1);
+    return maxv;
+}
+
+void increaseKey(int i,int key){
+    if(key < A[i])
+        return;
+    A[i] = key;
+    while (i > 1 && A[i / 2] < A[i]){
+        swap(A[i], A[i / 2]);
+        i = i / 2;
+    }
+}
+
+void insert(int key){
+    H++;
+    A[H] = -INFTY;
+    increaseKey(H, key);
+}
+
+int main(){
+    int key;
+    char com[10];
+
+    while( 1 ){
+        scanf("%s", com);
+        if(com[0] == 'e' && com[1] == 'n')
+            break;
+        if(com[0] == 'i'){
+            scanf("%d", &key);
+            insert(key);
+        }else{
+            printf("%d\n", extract());
         }
     }
-    cout << m[1][n] << endl;
-
     return 0;
 }

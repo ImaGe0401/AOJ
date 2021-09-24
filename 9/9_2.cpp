@@ -72,28 +72,37 @@ const double PI  = acos(-1.0);
 #define dump(x)  cerr << #x << " = " << (x) << endl;
 #define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << " " << __FILE__ << endl;
 
-//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_B
-static const int N = 100;
-int main()
-{
-    int n, p[N + 1], m[N + 1][N + 1];
-    cin >> n;
-    for (int i = 1; i <= n; ++i){
-        cin >> p[i - 1] >> p[i];
-    }
+//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_9_A
 
-    for (int i = 1; i <= n; ++i)
-        m[i][i] = 0;
-    for (int l = 2; l <= n; ++l){
-        for (int i = 1; i <= n - l + 1; ++i){
-            int j = i + l - 1;
-            m[i][j] = (1 << 21);
-            for (int k = i; k <= j - 1; ++k){
-                m[i][j] = min(m[i][j], m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]);
-            }
-        }
-    }
-    cout << m[1][n] << endl;
+#define MAX 100000
 
+int parent(int i){
+    return i / 2;
+}
+
+int left(int i){
+    return 2 * i;
+}
+
+int right(int i){
+    return 2 * i + 1;
+}
+
+int main(){
+    int H, i, A[MAX + 1];
+
+    cin >> H;
+    for (i = 1; i <= H; ++i)
+        cin >> A[i];
+    for (i = 1; i <= H; ++i){
+        cout << "node " << i << ": key = " << A[i] << ", ";
+        if(parent(i) >= 1)
+            cout << "parent key = " << A[parent(i)] << ", ";
+        if(left(i) <= H)
+            cout << "left key = " << A[left(i)] << ", ";
+        if(right(i) <= H)
+            cout << "right key = " << A[right(i)] << ", ";
+        cout << endl;
+    }
     return 0;
 }
