@@ -72,28 +72,56 @@ const double PI  = acos(-1.0);
 #define dump(x)  cerr << #x << " = " << (x) << endl;
 #define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << " " << __FILE__ << endl;
 
-//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_10_B
-static const int N = 100;
-int main()
-{
-    int n, p[N + 1], m[N + 1][N + 1];
-    cin >> n;
-    for (int i = 1; i <= n; ++i){
-        cin >> p[i - 1] >> p[i];
-    }
+//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_C
 
-    for (int i = 1; i <= n; ++i)
-        m[i][i] = 0;
-    for (int l = 2; l <= n; ++l){
-        for (int i = 1; i <= n - l + 1; ++i){
-            int j = i + l - 1;
-            m[i][j] = (1 << 21);
-            for (int k = i; k <= j - 1; ++k){
-                m[i][j] = min(m[i][j], m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]);
-            }
+static const int N = 100;
+static const int INFTY = (1 << 21);
+
+int n, M[N][N];
+int d[N];
+
+void bfs(int s){
+    queue<int> q;
+    q.push(s);
+    for (int i = 0; i < n; ++i)
+        d[i] = INFTY;
+    d[s] = 0;
+    int u;
+    while(!q.empty()){
+        u = q.front();
+        q.pop();
+        for (int v = 0; v < n; ++v){
+            if(M[u][v] == 0)
+                continue;
+            if(d[v] != INFTY)
+                continue;
+            d[v] = d[u] + 1;
+            q.push(v);
         }
     }
-    cout << m[1][n] << endl;
+    for (int i = 0; i < n; ++i){
+        cout << i+1 << " " << ((d[i] == INFTY) ? (-1) : d[i]) << endl;
+    }
+}
+
+int main(){
+    int u, k, v;
+
+    cin >> n;
+    for (int i = 0; i < n; ++i){
+        for (int j = 0; j < n; ++j)
+            M[i][j] = 0;
+    }
+    for (int i = 0; i < n; ++i){
+        cin >> u >> k;
+        u--;
+        for (int j = 0; j < k; ++j){
+            cin >> v;
+            v--;
+            M[u][v] = 1;
+        }
+    }
+    bfs(0);
 
     return 0;
 }
