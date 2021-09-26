@@ -61,7 +61,7 @@ typedef long long LL;
 #define fore(i,a) for(auto &i:a)
 
 //constant
-//--------------------------------------------
+//----------------------------------------------
 const double EPS = 1e-10;
 const double PI  = acos(-1.0);
  
