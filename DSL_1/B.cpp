@@ -136,7 +136,7 @@ void find(int v, int sx, int tx, int sy, int ty, int depth, vector<Point> &ans){
         }
         if (T[v].r != NIL)
         {
-            if (sx <= tx)
+            if (x <= tx)
                 find(T[v].r, sx, tx, sy, ty, depth + 1, ans);
         }
     }else{
@@ -146,7 +146,7 @@ void find(int v, int sx, int tx, int sy, int ty, int depth, vector<Point> &ans){
         }
         if (T[v].r != NIL)
         {
-            if (sy <= ty)
+            if (y <= ty)
                 find(T[v].r, sx, tx, sy, ty, depth + 1, ans);
         }
     }
@@ -179,4 +179,5 @@ int main(){
         }
         printf("\n");
     }
+    return 0;
 }
