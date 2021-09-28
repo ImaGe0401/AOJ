@@ -72,7 +72,7 @@ const double PI  = acos(-1.0);
 #define dump(x)  cerr << #x << " = " << (x) << endl;
 #define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << " " << __FILE__ << endl;
 
-//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_12_A
+//https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_A
 
 static const int MAX = 100;
 static const int INFTY = (1 << 21);
